@@ -11,6 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class ListDateNameGame {
     private String stockTicker;
 
+    //TODO - Clean up this function. I don't know what I was thinking.
     private String[] generateRandomDates(String listDate, int numberOfDates){
         String[] dates = new String[numberOfDates];
         int trueYear,trueMonth, trueDay, trueIndex;
@@ -39,6 +40,7 @@ public class ListDateNameGame {
         return dates;
     }
 
+    //TODO - Write a unit test. Maybe a few. This doesn't count.
     public void playGame() throws IOException {
         Stock gameStock = SerDe.deserializeJson(ApiClient.getGeneralStockData("AAPL"));
         assert gameStock != null;

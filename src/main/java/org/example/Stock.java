@@ -20,4 +20,10 @@ public class Stock {
     public void setList_date(String list_date) { this.list_date = list_date; }
 
     public String getListDate(){return list_date;}
+    public String getTicker(){return ticker;}
+    public String getName(){return name;}
+    public String getMarket(){return market;}
+    public String getPrimaryExchange(){return primary_exchange;}
+    public String getType(){return type;}
+    public String getCurrencyName(){return currency_name;}
 }
