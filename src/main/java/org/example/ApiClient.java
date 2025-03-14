@@ -1,4 +1,6 @@
 package org.example;
+import org.jetbrains.annotations.NotNull;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -30,7 +32,7 @@ public class ApiClient {
         }
     }
 
-    public static String getRealTimeStockData(String tickerSymbol) throws IOException {
+    public static @NotNull String getRealTimeStockData(String tickerSymbol) throws IOException {
         return fetchStockData(String.format("https://api.polygon.io/v2/last/trade/%s?apiKey=%s",
                 tickerSymbol, POLYGON_API_KEY
         ));
