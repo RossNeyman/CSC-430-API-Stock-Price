@@ -4,8 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.Stock;
 
 public class SerDe {
-    static ObjectMapper mapper = new ObjectMapper();
-    public static Stock deserializeJson(String json){
+    private static ObjectMapper mapper = new ObjectMapper();
+
+    public static Stock deserializeJsonStockResponse(String json){
         try{
             JsonNode rootNode = mapper.readTree(json);
             JsonNode resultsNode = rootNode.get("results");

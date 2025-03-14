@@ -42,7 +42,7 @@ public class ListDateNameGame {
 
     //TODO - Write a unit test. Maybe a few. This doesn't count.
     public void playGame() throws IOException {
-        Stock gameStock = SerDe.deserializeJson(ApiClient.getGeneralStockData("AAPL"));
+        Stock gameStock = SerDe.deserializeJsonStockResponse(ApiClient.getGeneralStockData("AAPL"));
         assert gameStock != null;
         for(String date: generateRandomDates(gameStock.getListDate(), 5)){
             System.out.println(date);
