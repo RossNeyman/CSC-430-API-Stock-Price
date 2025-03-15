@@ -6,12 +6,16 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ListDateNameGame {
     private String stockTicker;
+    private final int EASY_DATE_GAME_DIFFICULTY = 2;
+    private final int MEDIUM_DATE_GAME_DIFFICULTY = 4;
+    private final int HARD_DATE_GAME_DIFFICULTY = 10;
 
-    //TODO - Clean up this function. I don't know what I was thinking.
+
     private String[] generateRandomDates(String listDate, int numberOfDates){
         String[] dates = new String[numberOfDates];
         int trueYear,trueMonth, trueDay, trueIndex;
@@ -40,14 +44,11 @@ public class ListDateNameGame {
         return dates;
     }
 
-    //TODO - Write a unit test. Maybe a few. This doesn't count.
+
     public void playGame() throws IOException {
-        Stock gameStock = SerDe.deserializeJsonStockResponse(ApiClient.getGeneralStockData("AAPL"));
-        assert gameStock != null;
-        for(String date: generateRandomDates(gameStock.getListDate(), 5)){
-            System.out.println(date);
-        }
+
     }
+
 
 
 }
