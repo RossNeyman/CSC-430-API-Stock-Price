@@ -24,8 +24,8 @@ public class ListDateNameGame {
         dates[trueIndex] = listDate;
 
         for(int i = 0; i < numberOfDates; i++){
-            LocalDate startDate = LocalDate.of(1900, 1, 1);
-            LocalDate endDate = LocalDate.of(2025, 1, 1);
+            LocalDate startDate = LocalDate.of(1960, 1, 1);
+            LocalDate endDate = LocalDate.of(2000, 1, 1);
             long daysBetween = ChronoUnit.DAYS.between(startDate, endDate);
             long randomDayOffset = ThreadLocalRandom.current().nextLong(daysBetween + 1);
             LocalDate randomDate = startDate.plusDays(randomDayOffset);
