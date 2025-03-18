@@ -9,7 +9,7 @@ import java.net.URL;
 
 public class ApiClient {
     private static final String POLYGON_API_KEY = "kApY0sl9MBHHa_E1AVxZdgrWW3AWlPEd";
-    private static final String ALPHA_VINTAGE_API_KEY = "AUJP70BDGGUOLTS5";
+    //private static final String ALPHA_VINTAGE_API_KEY = "AUJP70BDGGUOLTS5";
 
     public static String fetchStockData(String apiCall) throws IOException {
         URL apiCallUrl = new URL(apiCall);
