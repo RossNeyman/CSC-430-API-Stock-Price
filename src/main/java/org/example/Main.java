@@ -4,40 +4,70 @@ import org.example.util.ApiClient;
 import org.example.util.SerDe;
 import java.util.Scanner;
 
+
 import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    private static final String TICKER_SYMBOLS_FILE = "tickers/top100tickers";
+
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean quitGame = false;
         int wins = 0;
-        while(!quitGame) {
-            System.out.println("You've won " + wins + " times.");
-            System.out.println("Enter the stock ticker symbol: ");
-            String ticker = scanner.nextLine();
 
-            try {
-                boolean result = ListDateNameGame.playGame(ticker.toUpperCase());
-                if (result) {
-                    System.out.println("Congratulations! You won!");
-                    wins++;
+        try {
+            TickerSymbolProvider tickerProvider = new TickerSymbolProvider(TICKER_SYMBOLS_FILE);
+
+            while(!quitGame) {
+                System.out.println("You've won " + wins + " times.");
+
+                String ticker;
+                System.out.println("Select an option:");
+                System.out.println("1. Enter a ticker symbol manually");
+                System.out.println("2. Use a random popular ticker");
+
+                int choice = getIntInput(scanner);
+
+                if (choice == 1) {
+                    System.out.println("Enter the stock ticker symbol: ");
+                    ticker = scanner.nextLine().toUpperCase();
                 } else {
-                    System.out.println("Better luck next time!");
+                    ticker = tickerProvider.getRandomTickerSymbol();
+                    System.out.println("Random ticker selected: " + ticker);
                 }
-                System.out.println(
-                        "Would you like to play again?" + '\n'
-                        +"1. Play again" + '\n'
-                        +"2. Quit"
-                );
-                if(scanner.nextInt() != 1){
-                    quitGame = true;
+
+                try {
+                    boolean result = ListDateNameGame.playGame(ticker);
+                    if (result) {
+                        System.out.println("Congratulations! You won!");
+                        wins++;
+                    } else {
+                        System.out.println("Better luck next time!");
+                    }
+
+                    System.out.println("Would you like to play again?");
+                    System.out.println("1. Play again");
+                    System.out.println("2. Quit");
+
+                    if(getIntInput(scanner) != 1) {
+                        quitGame = true;
+                    }
+                } catch (IOException e) {
+                    System.out.println("An error occurred while retrieving stock data.");
+                    e.printStackTrace();
                 }
-                scanner.nextLine();
-            } catch (IOException e) {
-                System.out.println("An error occurred while retrieving stock data.");
-                e.printStackTrace();
             }
+        } catch (IOException e) {
+            System.out.println("Failed to load ticker symbols: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            scanner.close();
         }
     }
 
+    private static int getIntInput(Scanner scanner) {
+        int input = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline
+        return input;
+    }
 }
