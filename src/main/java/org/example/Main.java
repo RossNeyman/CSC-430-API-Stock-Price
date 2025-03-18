@@ -4,10 +4,11 @@ import org.example.util.ApiClient;
 import org.example.util.SerDe;
 import java.util.Scanner;
 
+
 import java.io.IOException;
 
 public class Main {
-    private static final String TICKER_SYMBOLS_FILE = "tickers/top100tickers.txt";
+    private static final String TICKER_SYMBOLS_FILE = "tickers/top100tickers";
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -15,7 +16,7 @@ public class Main {
         int wins = 0;
 
         try {
-            TickerSymbolProvider tickerProvider = new TickerSymbolProvider("tickers/top100tickers.txt");
+            TickerSymbolProvider tickerProvider = new TickerSymbolProvider(TICKER_SYMBOLS_FILE);
 
             while(!quitGame) {
                 System.out.println("You've won " + wins + " times.");
