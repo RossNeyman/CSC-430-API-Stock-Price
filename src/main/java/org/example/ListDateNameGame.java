@@ -47,7 +47,7 @@ public class ListDateNameGame {
 
         ListDateNameGame game = new ListDateNameGame();
         String[] options = game.generateRandomDates(correctListDate, 4);
-        //System.out.println("You chose " + ticker + ": " + gameStock.getName());
+        System.out.println("You chose " + ticker + ": " + gameStock.getName());
         System.out.println("Guess the correct listing date for the stock: " + ticker);
         for (int i = 0; i < options.length; i++) {
             System.out.println((i + 1) + ". " + options[i]);
