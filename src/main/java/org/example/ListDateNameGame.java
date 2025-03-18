@@ -11,15 +11,11 @@ import java.util.concurrent.ThreadLocalRandom;
 public class ListDateNameGame {
     private String stockTicker;
 
-    //TODO - Clean up this function. I don't know what I was thinking.
     private String[] generateRandomDates(String listDate, int numberOfDates){
         String[] dates = new String[numberOfDates];
         int trueYear,trueMonth, trueDay, trueIndex;
 
         LocalDate trueListDate = LocalDate.parse(listDate);
-        trueYear = trueListDate.getYear();
-        trueMonth = trueListDate.getMonthValue();
-        trueDay = trueListDate.getDayOfMonth();
         trueIndex = ThreadLocalRandom.current().nextInt(numberOfDates);
         dates[trueIndex] = listDate;
 
@@ -40,7 +36,6 @@ public class ListDateNameGame {
         return dates;
     }
 
-    //TODO - Write a unit test. Maybe a few. This doesn't count.
     public void playGame() throws IOException {
         Stock gameStock = SerDe.deserializeJsonStockResponse(ApiClient.getGeneralStockData("AAPL"));
         assert gameStock != null;
@@ -48,6 +43,4 @@ public class ListDateNameGame {
             System.out.println(date);
         }
     }
-
-
 }
