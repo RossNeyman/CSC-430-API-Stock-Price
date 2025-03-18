@@ -1,4 +1,5 @@
 package org.example.util;
+import io.github.cdimascio.dotenv.Dotenv;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
@@ -8,7 +9,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class ApiClient {
-    private static final String POLYGON_API_KEY = "kApY0sl9MBHHa_E1AVxZdgrWW3AWlPEd";
+    private static final Dotenv dotenv = Dotenv.load();
+    private static final String POLYGON_API_KEY = dotenv.get("POLYGON_API_KEY");
+
 
 
     public static String fetchStockData(String apiCall) throws IOException {
