@@ -22,27 +22,13 @@ public class Main {
                 System.out.println("You've won " + wins + " times.");
 
                 String ticker;
-                System.out.println("Select an option:");
-                System.out.println("1. Enter a ticker symbol manually");
-                System.out.println("2. Use a random popular ticker");
-
-                int choice = getIntInput(scanner);
-
-                if (choice == 1) {
-                    System.out.println("Enter the stock ticker symbol: ");
-                    ticker = scanner.nextLine().toUpperCase();
-                } else {
-                    ticker = tickerProvider.getRandomTickerSymbol();
-                    System.out.println("Random ticker selected: " + ticker);
-                }
+                ticker = tickerProvider.getRandomTickerSymbol();
+                System.out.println("Random ticker selected: " + ticker);
 
                 try {
                     boolean result = ListDateNameGame.playGame(ticker);
                     if (result) {
-                        System.out.println("Congratulations! You won!");
                         wins++;
-                    } else {
-                        System.out.println("Better luck next time!");
                     }
 
                     System.out.println("Would you like to play again?");
