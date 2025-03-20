@@ -11,7 +11,7 @@ class SerDeTest {
 
     @Test
     void testDeserializeJsonStockResponse() {
-        String json = "{\"results\": {\"symbol\": \"AAPL\", \"price\": \"1980-12-12\"}}";
+        String json = "{\"results\": {\"ticker\": \"AAPL\", \"list_date\": \"1980-12-12\"}}";
         Stock stock = SerDe.deserializeJsonStockResponse(json);
 
         assertNotNull(stock, "Stock object should not be null");

@@ -110,4 +110,6 @@ public class Stock {
      * @return The currency name.
      */
     public String getCurrencyName() { return currency_name; }
+
+    public Stock(){}
 }

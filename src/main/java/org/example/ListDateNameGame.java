@@ -13,7 +13,14 @@ import java.util.concurrent.ThreadLocalRandom;
 public class ListDateNameGame {
     private String stockTicker;
 
-    private String[] generateRandomDates(String listDate, int numberOfDates){
+    /**
+     * Generates an array of random dates with one correct listing date.
+     *
+     * @param listDate The correct listing date of the stock in "yyyy-MM-dd" format.
+     * @param numberOfDates The number of dates to generate.
+     * @return An array of unique dates including the correct listing date.
+     */
+    String[] generateRandomDates(String listDate, int numberOfDates){
         String[] dates = new String[numberOfDates];
         int trueYear,trueMonth, trueDay, trueIndex;
 
@@ -41,6 +48,13 @@ public class ListDateNameGame {
         return dates;
     }
 
+    /**
+     * Plays the stock listing date guessing game.
+     *
+     * @param ticker The stock ticker symbol.
+     * @return True if the user guessed correctly, false otherwise.
+     * @throws IOException If there is an issue retrieving stock data.
+     */
     public static boolean playGame(String ticker) throws IOException {
         Stock gameStock = SerDe.deserializeJsonStockResponse(ApiClient.getGeneralStockData(ticker));
         assert gameStock != null;
@@ -73,12 +87,29 @@ public class ListDateNameGame {
         return correct;
     }
 
-    private List<LocalDate> createDateRange(LocalDate correctListDate){
+    /**
+     * Creates a date range 20 years before and after the given date.
+     * Sets the end date to the current date if the given date was less than 20 years ago
+     *
+     * @param correctListDate The stock's correct listing date.
+     * @return A list containing the start and end dates of the range.
+     */
+    List<LocalDate> createDateRange(LocalDate correctListDate){
         LocalDate startDate = LocalDate.of(correctListDate.getYear()-20, 1, 1);
         LocalDate endDate = LocalDate.of(correctListDate.getYear()+20, 1, 1);
+        if(endDate.isAfter(LocalDate.now())){
+            endDate = LocalDate.now();
+        }
         return new ArrayList<>(Arrays.asList(startDate, endDate));
     }
-    private boolean hasDuplicateDates(String[] dates){
+
+    /**
+     * Checks whether an array of dates contains duplicate values.
+     *
+     * @param dates The array of dates to check.
+     * @return True if there are duplicate dates, false otherwise.
+     */
+    boolean hasDuplicateDates(String[] dates){
         HashSet<String> existingDates = new HashSet<>(Arrays.asList(dates));
         return existingDates.size() < dates.length;
     }

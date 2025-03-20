@@ -14,12 +14,16 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         boolean quitGame = false;
         int wins = 0;
+        int streak = 0;
 
         try {
             TickerSymbolProvider tickerProvider = new TickerSymbolProvider(TICKER_SYMBOLS_FILE);
 
             while(!quitGame) {
                 System.out.println("You've won " + wins + " times.");
+                if(streak > 1) {
+                    System.out.println("You're on a " + streak + " win streak!");
+                }
 
                 String ticker;
                 ticker = tickerProvider.getRandomTickerSymbol();
@@ -29,6 +33,10 @@ public class Main {
                     boolean result = ListDateNameGame.playGame(ticker);
                     if (result) {
                         wins++;
+                        streak++;
+                    }
+                    else{
+                        streak = 0;
                     }
 
                     System.out.println("Would you like to play again?");
