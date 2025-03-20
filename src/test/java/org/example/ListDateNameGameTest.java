@@ -43,7 +43,7 @@ class ListDateNameGameTest {
 
         assertEquals(2, range.size(), "Date range should contain exactly two elements");
         assertEquals(LocalDate.of(2000, 1, 1), range.get(0), "Start date should be 20 years before");
-        assertEquals(LocalDate.of(2040, 1, 1), range.get(1), "End date should be 20 years after");
+        assertEquals(LocalDate.now(), range.get(1), "End date should be current date");
     }
 
     @Test

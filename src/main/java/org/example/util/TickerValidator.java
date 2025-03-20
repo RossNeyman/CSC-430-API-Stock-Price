@@ -2,10 +2,14 @@ package org.example.util;
 
 import java.io.*;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+
 
 //This class is a utility for validating that the tickers in the resource file return a list date from the api.
 //It is to be used whenever the file with stock tickers is changed, but is not run from Main.
@@ -38,14 +42,15 @@ public class TickerValidator {
                             continue;
                         }
 
-                        if (stockData.getListDate() != null) {
+                        if (stockData.getListDate() != null && isValidDateFormat(stockData.getListDate())) {
                             validSymbols.add(ticker);
                             System.out.println("Valid ticker found: " + ticker + " (" + (++tickersFound) + ")");
                         } else {
                             System.out.println("Ticker has null listDate: " + ticker);
                         }
 
-                        TimeUnit.SECONDS.sleep((60 / (ApiClient.getNumberOfApiKeys() * 5L)) + 1);
+                        //timeout the api calls as to not go over the 5 call per minute per key limit
+                        TimeUnit.SECONDS.sleep(3);
                     } catch (Exception e) {
                         System.err.println("Error processing ticker: " + line);
                         e.printStackTrace();
@@ -63,11 +68,17 @@ public class TickerValidator {
         if (!validSymbols.isEmpty()) {
             try {
                 File outputFile = new File("tickers/validTickers");
+
+                // Ensure the parent directory exists
+                File parentDir = outputFile.getParentFile();
+                if (parentDir != null && !parentDir.exists()) {
+                    parentDir.mkdirs();
+                }
+
                 try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
                     for (String symbol : validSymbols) {
                         writer.write(symbol);
                         writer.newLine();
-                        writer.flush(); // Add explicit flush after each write
                     }
                     System.out.println("Valid tickers written to: " + outputFile.getAbsolutePath());
                 }
@@ -77,6 +88,16 @@ public class TickerValidator {
             }
         } else {
             System.err.println("No valid tickers found to write to file.");
+        }
+    }
+
+    public static boolean isValidDateFormat(String dateString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        try {
+            LocalDate.parse(dateString, formatter);
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
         }
     }
 }
