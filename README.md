@@ -19,3 +19,5 @@ To use this program, follow these steps:
      ```
 
 Now you're ready to run the program!
+
+Alternatively, you can watch a video tutorial here: [Project tutorial](https://youtu.be/rUQY-tJuJwo)
